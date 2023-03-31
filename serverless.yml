@@ -1,0 +1,30 @@
+service: authentication
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - 'dynamodb:*'
+          Resource: '*'
+
+functions:
+  signup:
+    handler: index.signup
+    events:
+      - http: 
+          path: /
+          method: post
+          cors: true
+
+  signin:
+    handler: index.signin
+    events:
+      - http:
+          path: /signin
+          method: post
+          cors: true
